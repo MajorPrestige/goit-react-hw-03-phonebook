@@ -74,8 +74,22 @@ export class App extends Component {
     this.setState({ filter: e.target.value });
   };
 
+  componentDidMount() {
+    const contacts = localStorage.getItem('contacts');
+
+    this.setState({
+      contacts: JSON.parse(contacts),
+    });
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contacts', JSON.stringify(this.state.contacts));
+    }
+  }
+
   render() {
-    const { contacts, filter } = this.state;
+    const { contacts, filter, contactsToDelete } = this.state;
 
     const filterNormalized = filter.toLowerCase();
     const filterContacts = contacts.filter(contact =>
@@ -94,6 +108,7 @@ export class App extends Component {
             onDeleteClick={this.deleteContact}
             onCheckboxChange={this.onCheckboxChange}
             deleteAllContact={this.deleteAllContact}
+            contactsToDelete={contactsToDelete}
           />
         </div>
       </>

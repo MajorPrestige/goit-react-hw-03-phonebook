@@ -12,3 +12,8 @@
   color: white;
   border: none;
 }
+
+.btn:disabled {
+  cursor: auto;
+  background-color: lightblue;
+}
